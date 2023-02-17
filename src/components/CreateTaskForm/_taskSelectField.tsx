@@ -1,23 +1,58 @@
-import React, {FC, ReactElement} from 'react'
-import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material';
+import React, { FC, ReactElement } from "react";
+import {
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
+} from "@mui/material";
+import { ISelectField } from "./interfaces/ISelectField";
+import PropTypes from 'prop-types';
 
-const TaskSelectField: FC = (): ReactElement => {
+const TaskSelectField: FC<ISelectField> = (
+  props,
+): ReactElement => {
+  const {
+    value = "",
+    label = "Select Box",
+    name = "selectBox",
+    items = [{ value: "", label: "Add Items" }],
+    disabled = false,
+    onChange = (e: SelectChangeEvent) => console.log(e),
+  } = props;
   return (
-    <FormControl  fullWidth size="small">
-        <InputLabel id="status">Status</InputLabel>
-        <Select
-            labelId="status"
-            id="status-select"
-            value=""
-            label="Status"
-            name="status"
-        >
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
-        </Select>
+    <FormControl fullWidth size="small">
+      <InputLabel id={`${name}-id`}>{label}</InputLabel>
+      <Select
+        labelId={`${name}-id`}
+        id={`${name}-id-select`}
+        value={value}
+        label={label}
+        name={name}
+        onChange={onChange}
+        disabled={disabled}
+      >
+        {items.map((item,index) => (
+            <MenuItem value={item.value} key={item.value+index}>{item.label}</MenuItem>
+        ))}
+        
+      </Select>
     </FormControl>
-  )
+  );
+};
+
+TaskSelectField.propTypes = {
+    name: PropTypes.string,
+    label: PropTypes.string,
+    value: PropTypes.string,
+    onChange: PropTypes.func,
+    items: PropTypes.arrayOf(
+        PropTypes.shape({
+            value: PropTypes.string.isRequired,
+            label: PropTypes.string.isRequired
+        }).isRequired
+    ),
+    disabled: PropTypes.bool
 }
 
-export default TaskSelectField
+export default TaskSelectField;
