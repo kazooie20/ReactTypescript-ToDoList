@@ -1,6 +1,7 @@
 import React, { FC, ReactElement } from "react";
 import {Grid} from '@mui/material';
 import Profile from "../profile/profile";
+import CreateTaskForm from "../CreateTaskForm/createTaskForm";
 
 const GridCssProperties = {
     height: '100vh',
@@ -18,7 +19,8 @@ const GridCssProperties = {
 const SideBar: FC = (): ReactElement => {
   return (
     <Grid item md={4} sx={GridCssProperties}>
-      <Profile />
+      <Profile name="Rayner" />
+      <CreateTaskForm />
     </Grid>
   );
 };
